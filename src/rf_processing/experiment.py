@@ -2,6 +2,7 @@
 import argparse
 from collections import Counter
 import json
+from time import perf_counter
 
 import numpy as np
 
@@ -19,6 +20,26 @@ def _brief(row):
     return {key: row[key] for key in ("signal_id", "source_tag", "center_freq_hz", "occupied_bw_hz",
             "snr_db", "candidate_modulation", "predicted_modulation", "classification_confidence",
             "lof_normality_score", "clf_reason", "peak_power_dbm")}
+
+
+def held_out_trials(model, known_start=61000, unfamiliar_start=92000):
+    """One result per labelled capture, including zero and multiple detections."""
+    for index, family in enumerate((*CLASSES, "16-QAM")):
+        unfamiliar = family == "16-QAM"
+        first = unfamiliar_start if unfamiliar else known_start + 16 * index
+        for j in range(12 if unfamiliar else 16):
+            noise_db = j % 4 if unfamiliar else 2 * (j % 5)
+            recording = simulate_recording(family, first + j, added_noise_db=noise_db)
+            start = perf_counter()
+            bursts, _ = analyze_recording(recording)
+            rows = _classify(bursts, model)
+            elapsed_ms = (perf_counter() - start) * 1000
+            prediction = "MISSED" if not rows else "MULTIPLE"
+            if len(rows) == 1:
+                prediction = rows[0]["predicted_modulation"]
+            yield dict(seed=first + j, family=family, added_noise_db=noise_db,
+                       prediction=prediction, latency_ms=elapsed_ms,
+                       detections=[_brief(row) for row in rows])
 
 
 def experiment(rescue_frequency_hz=None):
@@ -43,20 +64,14 @@ def experiment(rescue_frequency_hz=None):
                                     if rescue_frequency_hz is None else "Operator supplied simulated corridor tuning")
     report["examples"]["rescue_corridor"] = [_brief(r) for r in _classify(signals, model)]
     # Independent fixed test seeds; no 16-QAM is used by fitting or threshold selection.
-    report["known_test"] = {}
-    for c, name in enumerate(CLASSES):
-        counts = Counter()
-        for j in range(16):
-            capture = simulate_recording(name, 61000 + 16*c + j, added_noise_db=2*(j%5))
-            bursts, _ = analyze_recording(capture)
-            labels = [r["predicted_modulation"] for r in _classify(bursts, model)]
-            counts[labels[0] if len(labels)==1 else ("MISSED" if not labels else "MULTIPLE")] += 1
-        report["known_test"][name] = dict(counts)
+    counts = {family: Counter() for family in CLASSES}
     report["held_out_16qam"] = []
-    for j in range(12):
-        capture = simulate_recording("16-QAM", 92000+j, added_noise_db=j%4)
-        bursts, _ = analyze_recording(capture)
-        report["held_out_16qam"].append({"seed": 92000+j, "detections": [_brief(r) for r in _classify(bursts, model)]})
+    for trial in held_out_trials(model):
+        if trial["family"] == "16-QAM":
+            report["held_out_16qam"].append({"seed": trial["seed"], "detections": trial["detections"]})
+        else:
+            counts[trial["family"]][trial["prediction"]] += 1
+    report["known_test"] = {family: dict(counter) for family, counter in counts.items()}
     return report
 
 

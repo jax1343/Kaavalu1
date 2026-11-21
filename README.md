@@ -1,5 +1,7 @@
 # KAAVALU local RF integration handoff
 
+The [RF validation report](docs/rf-validation.md) includes the offline scenario runner, measured classification and timing results, recorded I/Q replay commands and the contract handoff for Laptop 1.
+
 Use Python 3.11 and NumPy 1.26.4. The input for this handoff is simulated IQ. The standalone classifier builds its reference model locally on first use.
 
 ## Verify the replay
