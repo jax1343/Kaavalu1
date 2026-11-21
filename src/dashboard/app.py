@@ -7,5 +7,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from src.dashboard.dashboard_ui import render_dashboard
+import streamlit as st
 
+st.set_page_config(page_title="KAAVALU | Incident monitor", layout="wide")
 render_dashboard(None)
