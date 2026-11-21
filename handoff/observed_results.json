@@ -1,0 +1,327 @@
+{
+  "data_source": "SIMULATED",
+  "samples_per_capture": 12288,
+  "training_counts": {
+    "GFSK": 48,
+    "FM-NB": 48,
+    "BPSK": 48,
+    "QPSK": 48,
+    "AM-DSB": 48,
+    "WB-FM": 48
+  },
+  "examples": {
+    "familiar_clear": {
+      "added_noise_db": 0.0,
+      "detections": [
+        {
+          "signal_id": "ed0a6dd2c25583f3f3ae/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150017956.22905734,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 22.65624374250705,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3697124546747015,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    "familiar_weak": {
+      "added_noise_db": 16.0,
+      "detections": [
+        {
+          "signal_id": "c43104c49b95bd94bf4a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150017894.7785967,
+          "occupied_bw_hz": 15750.0,
+          "snr_db": 7.598022533214685,
+          "candidate_modulation": null,
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": null,
+          "lof_normality_score": null,
+          "clf_reason": "Low SNR (7.598 dB < 8.0 dB)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    "unfamiliar_clear": {
+      "added_noise_db": 0.0,
+      "detections": [
+        {
+          "signal_id": "b74d6a8e454530e5f9ad/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150018047.42066443,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 21.441374363450734,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.866738988506569,
+          "lof_normality_score": -0.4283965450001159,
+          "clf_reason": "Novel waveform (LOF -0.428 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    "rescue_corridor": [
+      {
+        "signal_id": "97f1a30ad065c14479bc/b1",
+        "source_tag": "SIMULATED",
+        "center_freq_hz": 150018001.75497517,
+        "occupied_bw_hz": 7875.0,
+        "snr_db": 24.46915316620217,
+        "candidate_modulation": "FM-NB",
+        "predicted_modulation": "FM-NB",
+        "classification_confidence": 1.0,
+        "lof_normality_score": 0.38793646111908553,
+        "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+        "peak_power_dbm": null
+      }
+    ]
+  },
+  "first_missed_qpsk_added_noise_db": 18.0,
+  "rescue_rule_status": "Illustrative tuning; team corridor file unavailable",
+  "known_test": {
+    "GFSK": {
+      "GFSK": 16
+    },
+    "FM-NB": {
+      "FM-NB": 11,
+      "GFSK": 2,
+      "UNKNOWN": 3
+    },
+    "BPSK": {
+      "UNKNOWN": 2,
+      "BPSK": 14
+    },
+    "QPSK": {
+      "QPSK": 16
+    },
+    "AM-DSB": {
+      "AM-DSB": 16
+    },
+    "WB-FM": {
+      "UNKNOWN": 2,
+      "WB-FM": 14
+    }
+  },
+  "held_out_16qam": [
+    {
+      "seed": 92000,
+      "detections": [
+        {
+          "signal_id": "0688d0525ba1cb4db292/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149969539.60366827,
+          "occupied_bw_hz": 21375.0,
+          "snr_db": 21.630580011828172,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.43123393676192046,
+          "clf_reason": "Novel waveform (LOF -0.431 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92001,
+      "detections": [
+        {
+          "signal_id": "c25aa06c2e0b31f94319/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995776.958585,
+          "occupied_bw_hz": 16500.0,
+          "snr_db": 21.56321456344038,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.40001129779472255,
+          "clf_reason": "Novel waveform (LOF -0.400 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92002,
+      "detections": [
+        {
+          "signal_id": "727e7c5c3524a3c8e6f9/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149998733.80056867,
+          "occupied_bw_hz": 14250.0,
+          "snr_db": 21.136635274071637,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.16213920684646044,
+          "clf_reason": "Novel waveform (LOF -0.162 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92003,
+      "detections": [
+        {
+          "signal_id": "11298b1798b568faa67e/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150001924.9253455,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 18.811096124700228,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.08734334095539853,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92004,
+      "detections": [
+        {
+          "signal_id": "69d0b9cf974bb89265e8/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149965748.55415028,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 22.449799030002918,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.832438179245206,
+          "clf_reason": "Novel waveform (LOF -0.832 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92005,
+      "detections": [
+        {
+          "signal_id": "0f5bb843b214293de607/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149979723.77659285,
+          "occupied_bw_hz": 19500.0,
+          "snr_db": 20.897227797546233,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.40495310134065,
+          "clf_reason": "Novel waveform (LOF -0.405 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92006,
+      "detections": [
+        {
+          "signal_id": "775e292bcfa12a02d916/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150017845.27124795,
+          "occupied_bw_hz": 22875.0,
+          "snr_db": 19.16065585589466,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.42722038926348804,
+          "clf_reason": "Novel waveform (LOF -0.427 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92007,
+      "detections": [
+        {
+          "signal_id": "7ae479b17c03a0b6c3a5/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150019911.13671097,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 18.484826810456912,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.48569168813447017,
+          "clf_reason": "Novel waveform (LOF -0.486 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92008,
+      "detections": [
+        {
+          "signal_id": "bc48486bded2217ba43e/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150031139.4871629,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 22.065743507384834,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.25619189269333065,
+          "clf_reason": "Novel waveform (LOF -0.256 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92009,
+      "detections": [
+        {
+          "signal_id": "4e1c82b3e00f87790e27/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150019560.05300838,
+          "occupied_bw_hz": 16500.0,
+          "snr_db": 21.583048690287736,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.5898584382132988,
+          "clf_reason": "Novel waveform (LOF -0.590 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92010,
+      "detections": [
+        {
+          "signal_id": "8a1a14cb5c2e4f495534/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149983589.85044155,
+          "occupied_bw_hz": 14250.0,
+          "snr_db": 21.064962816719262,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.31496962738283707,
+          "clf_reason": "Novel waveform (LOF -0.315 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 92011,
+      "detections": [
+        {
+          "signal_id": "d1c635582f18bb8321ef/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993683.16082343,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 19.417519419806844,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.12973408377494855,
+          "clf_reason": "Novel waveform (LOF -0.130 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    }
+  ]
+}
