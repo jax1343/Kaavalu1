@@ -48,7 +48,7 @@ def _evidence(rows, meta, rules, history):
     cols[0].metric("Modulation", ev["predicted_modulation"] or "Unavailable")
     cols[1].metric("SNR", f'{ev["snr_db"]:.2f} dB' if ev["snr_db"] is not None else "Unavailable")
     cols[2].metric("Calibrated peak power", power_display_text(ev["peak_power_dbm"]))
-    if ev["peak_power_dbm"] is None:
+    if ev["peak_power_dbm"] is None and "calibrated power" not in ev["explainable_reason"].lower():
         st.caption("Calibrated power is unavailable for this signal.")
     if ev["assumed_power_dbm"] is not None:
         st.warning(f'Rule-only input assumes {ev["assumed_power_dbm"]:g} dBm. The RF measurement has no calibrated power.')
@@ -183,8 +183,12 @@ def render_dashboard(pipeline_callback) -> None:
                 background:rgba(109,133,148,.09);border-radius:3px;}
       .verdict small,.verdict strong {display:block;}
       .verdict strong {font:600 clamp(1rem,3vw,1.35rem) ui-monospace,monospace;overflow-wrap:anywhere;}
-      [data-testid="stMetricValue"] {font-size:clamp(1.05rem,2vw,1.8rem);}
-      @media(max-width:650px){.main .block-container{padding:3.2rem 1rem 1rem;}}
+      [data-testid="stMetric"] {border:1px solid #74889244;border-radius:5px;padding:.6rem .8rem;}
+      [data-testid="stMetricValue"] {font-size:clamp(1.05rem,2vw,1.8rem);font-variant-numeric:tabular-nums;}
+      [data-testid="stSidebar"] button[kind="primary"] {background:#176579;border-color:#176579;color:white;}
+      @media(max-width:650px){.main .block-container{padding:3.2rem 1rem 1rem;}
+        [data-baseweb="tab-list"]{flex-wrap:wrap;height:auto;gap:.25rem .75rem;}
+        [data-baseweb="tab"]{padding:.3rem 0;font-size:.85rem;}}
     </style>""", unsafe_allow_html=True)
     st.title("KAAVALU · Incident monitor")
     st.caption("DisasterNet  /  Offline spectrum coordination")
