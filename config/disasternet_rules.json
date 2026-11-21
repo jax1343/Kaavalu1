@@ -1,0 +1,76 @@
+{
+  "description": "Simulated DisasterNet demonstration corridors. Frequencies and limits are for testing only.",
+  "source_commit": "9debb045d746b4883360617db4e44888c67911fa",
+  "source_file": "src/backend/rules.py",
+  "rules": [
+    {
+      "rule_id": "EM-POL-01",
+      "agency_corridor": "Police Tactical & Traffic Dispatch",
+      "coordinator_role": "Police Comms Coordinator",
+      "freq_min_mhz": 148,
+      "freq_max_mhz": 148.15,
+      "allowed_modulations": [
+        "GFSK",
+        "FM-NB"
+      ],
+      "max_bw_khz": 25,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-FIR-02",
+      "agency_corridor": "Fire & Hazmat Tactical Net",
+      "coordinator_role": "Fireground Frequency Coordinator",
+      "freq_min_mhz": 148.15,
+      "freq_max_mhz": 148.3,
+      "allowed_modulations": [
+        "FM-NB",
+        "GFSK"
+      ],
+      "max_bw_khz": 25,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-AMB-03",
+      "agency_corridor": "Ambulance & EMS Medical Telemetry",
+      "coordinator_role": "EMS Medical Dispatch Coordinator",
+      "freq_min_mhz": 148.3,
+      "freq_max_mhz": 148.45,
+      "allowed_modulations": [
+        "GFSK",
+        "BPSK"
+      ],
+      "max_bw_khz": 35,
+      "max_power_dbm": -20,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-RES-04",
+      "agency_corridor": "Disaster Search & Rescue (NDRF / SAR)",
+      "coordinator_role": "Rescue Operations Coordinator",
+      "freq_min_mhz": 148.45,
+      "freq_max_mhz": 148.65,
+      "allowed_modulations": [
+        "QPSK",
+        "GFSK"
+      ],
+      "max_bw_khz": 50,
+      "max_power_dbm": -10,
+      "priority_tier": "HIGH"
+    },
+    {
+      "rule_id": "EM-AIR-05",
+      "agency_corridor": "Relief Helicopter Air-to-Ground SAR",
+      "coordinator_role": "Aviation SAR Coordinator",
+      "freq_min_mhz": 148.65,
+      "freq_max_mhz": 148.85,
+      "allowed_modulations": [
+        "AM-DSB"
+      ],
+      "max_bw_khz": 30,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    }
+  ]
+}
