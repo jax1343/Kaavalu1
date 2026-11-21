@@ -8,85 +8,82 @@ from zipfile import BadZipFile, ZipFile
 
 import pandas as pd
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import streamlit as st
 
-from src.backend import check_authorization, get_auth_rules, init_db, save_detected_signals
+from src.backend import get_auth_rules, init_db, save_detected_signals
 from src.backend.db_manager import (insert_coordinator_review, list_sessions, load_session,
                                     review_history, save_rules_and_results)
 from src.backend.rules import MODULATIONS, TIERS
 from src.contracts import power_display_text
 
 
-COLORS = {"UNKNOWN": "#bc8708", "KNOWN_AUTHORIZED": "#267652",
-          "POTENTIALLY_UNAUTHORIZED": "#be4245", "RECOGNIZED_NO_AUTH_RECORD": "#54769a"}
+from .incidents import evaluate, evidence_csv, incident
+from .monitor import COLORS, spectrum
+from .scenarios import (AUTHORIZED, CUSTOM, HYPOTHETICAL, PACKET, SCENARIOS,
+                        builtin_input, prepare_case)
 
 
-def _spectrum(meta, rows, rules):
-    freq = meta.get("spectrum_freq_hz")
-    if freq is not None:
-        axis = [f / 1e6 for f in freq]
-        values = meta["spectrum_db"]
-        unit = meta.get("spectrum_unit", "Relative dB")
-    else:
-        axis = meta.get("freq_axis_mhz", [])
-        values = meta.get("peak_psd_dbm", [])
-        unit = "dBm"
-    if not len(axis):
-        st.caption("Spectrum data is unavailable for this session.")
-        return
-    times = meta.get("time_s", meta.get("time_axis_s", []))
-    waterfall = meta.get("waterfall_db", [])
-    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=.09)
-    fig.add_trace(go.Scatter(x=axis, y=values, mode="lines", line=dict(color="#276278")), row=1, col=1)
-    if len(times) and len(waterfall):
-        water_axis = [f / 1e6 for f in meta["frequency_hz"]] if "frequency_hz" in meta else axis
-        fig.add_trace(go.Heatmap(x=water_axis, y=times, z=waterfall, colorscale="Viridis",
-                                 showscale=False), row=2, col=1)
-        for row in rows:
-            start, duration = row.get("start_time_s"), row.get("duration_s")
-            if start is not None and duration is not None:
-                center, half = row["center_freq_mhz"], row["occupied_bw_khz"] / 2000
-                fig.add_shape(type="rect", x0=center-half, x1=center+half, y0=start, y1=start+duration,
-                              line=dict(color=COLORS[row["verdict_category"]], width=2), row=2, col=1)
-    for rule in rules:
-        lo, hi = max(rule["freq_min_mhz"], min(axis)), min(rule["freq_max_mhz"], max(axis))
-        if lo < hi:
-            fig.add_vrect(x0=lo, x1=hi, fillcolor="#7eb6a3", opacity=.2, line_width=0, row=1, col=1)
-    fig.update_yaxes(title_text=unit, row=1, col=1)
-    fig.update_yaxes(title_text="Time (s)", row=2, col=1)
-    fig.update_xaxes(title_text="Frequency (MHz)", row=2, col=1)
-    fig.update_layout(height=450, showlegend=False, margin=dict(l=10, r=10, t=10, b=10))
-    st.plotly_chart(fig, use_container_width=True)
+def _width(width):
+    return f"{width:.2f} kHz" if round(width, 2) == width else f"{width:g} kHz"
 
 
-def _evidence(rows, meta, rules):
-    _spectrum(meta, rows, rules)
-    if not rows:
-        st.info("No detections to inspect.")
-        return
-    table = [{"Signal": r["signal_id"], "Source": r["source_tag"], "MHz": r["center_freq_mhz"],
-              "Bandwidth (kHz)": r["occupied_bw_khz"], "Power": power_display_text(r["peak_power_dbm"]),
-              "SNR (dB)": r.get("snr_db"), "Modulation": r.get("predicted_modulation"),
-              "Verdict": r["verdict_category"], "Severity": r["alert_severity"]} for r in rows]
-    st.dataframe(pd.DataFrame(table), hide_index=True, use_container_width=True)
+def _evidence(rows, meta, rules, history):
     by_id = {r["signal_id"]: r for r in rows}
-    row = by_id[st.selectbox("Inspect signal", list(by_id))]
-    columns = st.columns(3)
-    columns[0].metric("Occupied bandwidth", f"{row['occupied_bw_khz']:g} kHz")
-    columns[1].metric("Peak power", power_display_text(row["peak_power_dbm"]))
-    columns[2].metric("Severity", row["alert_severity"])
-    st.write(row["explainable_reason"])
-    st.caption(f"{row['agency_corridor']} · {row['coordinator_role']}")
+    selected = st.selectbox("Inspect signal", list(by_id))
+    row = by_id[selected]
+    ev = incident(row, rules, history)
+    verdict = ev["verdict_category"]
+    st.markdown(f'<div class="verdict" style="border-color:{COLORS[verdict]}">'
+                f'<small>Final verdict</small><strong>{verdict}</strong></div>', unsafe_allow_html=True)
+    st.caption(f'{ev["agency_corridor"]} · {ev["alert_severity"]} severity · Review: {ev["review_status"]}')
+    st.write(ev["explainable_reason"])
+    cols = st.columns(3)
+    cols[0].metric("Measured width", _width(ev["occupied_bw_khz"]))
+    cols[1].metric("Adjusted limit", _width(ev["adjusted_limit_khz"]) if ev["adjusted_limit_khz"] is not None else "Unavailable")
+    cols[2].metric("Excess bandwidth", _width(ev["excess_bw_khz"]) if ev["excess_bw_khz"] is not None else "Unavailable")
+    if ev["nominal_limit_khz"] is not None:
+        st.caption(f'{ev["rule_basis"]} · {ev["matched_rule_id"]} · '
+                   f'{ev["nominal_limit_khz"]:g} kHz nominal limit with 15% tolerance.')
+    cols = st.columns(3)
+    cols[0].metric("Modulation", ev["predicted_modulation"] or "Unavailable")
+    cols[1].metric("SNR", f'{ev["snr_db"]:.2f} dB' if ev["snr_db"] is not None else "Unavailable")
+    cols[2].metric("Calibrated peak power", power_display_text(ev["peak_power_dbm"]))
+    if ev["peak_power_dbm"] is None:
+        st.caption("Calibrated power is unavailable for this signal.")
+    if ev["assumed_power_dbm"] is not None:
+        st.warning(f'Rule-only input assumes {ev["assumed_power_dbm"]:g} dBm. The RF measurement has no calibrated power.')
+    details = [
+        ("Measured center", f'{ev["center_freq_mhz"]:.6f} MHz'),
+        ("Capture timestamp", ev["capture_timestamp"] or "Unavailable"),
+        ("Evaluated (UTC)", ev["evaluated_at_utc"] or "Unavailable"),
+        ("Authorization lookup", ev["matched_rule_id"] or "No matched rule"),
+        ("Allowed modulation", ev["allowed_modulations"] or "Unavailable"),
+        ("Classification evidence", ev["classifier_reason"] or "Unavailable"),
+        ("Missing evidence", ev["missing_measurements"] or "None recorded"),
+    ]
+    with st.expander("Alert details · frequency, timestamps and rule lookup"):
+        st.table(pd.DataFrame(details, columns=["Field", "Evidence"]).set_index("Field"))
+    st.markdown("#### Spectrum monitor")
+    figure = spectrum(meta, rows, row, rules)
+    if figure is None:
+        st.info("Spectrum and time-series samples are unavailable for this stored session. Run the capture to inspect them.")
+    else:
+        st.plotly_chart(figure, use_container_width=True)
+        st.caption("Shading marks configured corridors and detected bands requiring review. "
+                   "Time-series strength uses the peak measured waterfall bin inside the selected bandwidth.")
     i, q = row.get("constellation_i"), row.get("constellation_q")
     if i is not None and len(i) and q is not None and len(i) == len(q):
-        fig = go.Figure(go.Scattergl(x=i, y=q, mode="markers", marker=dict(size=4, color="#217978")))
+        fig = go.Figure(go.Scattergl(x=i, y=q, mode="markers", marker=dict(size=4, color="#207581")))
         fig.update_layout(title="IQ constellation", xaxis_title="In-phase", yaxis_title="Quadrature",
-                          height=280, margin=dict(t=45, b=30))
+                          height=270, margin=dict(t=45,b=30))
         st.plotly_chart(fig, use_container_width=True)
-    if row.get("features"):
-        with st.expander("Waveform features"):
+    with st.expander("Session measurements and waveform features"):
+        st.dataframe([{"Signal": r["signal_id"], "Frequency (MHz)": r["center_freq_mhz"],
+                       "Bandwidth (kHz)": r["occupied_bw_khz"], "Modulation": r.get("predicted_modulation"),
+                       "Final verdict": r["verdict_category"]} for r in rows], hide_index=True)
+        if row.get("features"):
             st.json(row["features"])
+    return row
 
 
 def _edit_rules(rules, rows, db_path):
@@ -104,42 +101,12 @@ def _edit_rules(rules, rows, db_path):
         try:
             for entry in entries:
                 entry["allowed_modulations"] = [s.strip() for s in (entry["allowed_modulations"] or "").split(",")]
-            checked = check_authorization(rows, entries)
+            checked = evaluate(rows, entries)
             save_rules_and_results(entries, checked, db_path)
         except (ValueError, sqlite3.Error) as exc:
             st.error(str(exc))
         else:
             st.rerun()
-
-
-def _reviews(rows, session, db_path):
-    if not rows:
-        st.info("Select a session to review its detections.")
-        return
-    flagged = [r["signal_id"] for r in rows if r["verdict_category"] != "KNOWN_AUTHORIZED"]
-    if flagged:
-        with st.form("coordinator_review", clear_on_submit=True):
-            signal = st.selectbox("Flagged signal", flagged)
-            name, role = st.columns(2)
-            coordinator = name.text_input("Coordinator name")
-            agency = role.text_input("Coordinator role")
-            disposition = st.selectbox("Disposition", ["Needs follow-up", "Verified friendly", "Confirmed spillover"])
-            notes = st.text_area("Investigation notes")
-            if st.form_submit_button("Save review"):
-                try:
-                    insert_coordinator_review(session, signal, coordinator, agency, disposition, notes, db_path)
-                except (ValueError, sqlite3.Error) as exc:
-                    st.error(str(exc))
-                else:
-                    st.success("Review saved.")
-    history = review_history(session, db_path)
-    if history:
-        st.dataframe(pd.DataFrame(history), hide_index=True, use_container_width=True)
-    report = {"session_id": session, "detections": rows, "reviews": history}
-    st.download_button("Download JSON report", json.dumps(report, indent=2), "session.json", "application/json")
-    summary = pd.DataFrame(rows)[["source_tag", "session_id", "signal_id", "center_freq_mhz", "occupied_bw_khz",
-                                  "peak_power_dbm", "verdict_category", "alert_severity", "explainable_reason"]]
-    st.download_button("Download detections CSV", summary.to_csv(index=False), "detections.csv", "text/csv")
 
 
 def _read_packet(packet):
@@ -156,50 +123,149 @@ def _read_packet(packet):
     return [row], display
 
 
+def _reviews(rows, selected, rules, history, db_path, preview):
+    if preview:
+        st.info("Training preview. Operator decisions are available for stored incidents.")
+    else:
+        with st.form("coordinator_review", clear_on_submit=True):
+            st.markdown("#### Record a decision")
+            st.caption(selected["signal_id"])
+            name, role = st.columns(2)
+            operator = name.text_input("Coordinator name")
+            agency = role.text_input("Coordinator role")
+            decision = st.radio("Disposition", ["Verified", "False alarm", "Escalate"], horizontal=True)
+            notes = st.text_area("Investigation notes")
+            if st.form_submit_button("Save review"):
+                try:
+                    insert_coordinator_review(selected["session_id"], selected["signal_id"], operator,
+                                              agency, decision, notes, db_path)
+                except (ValueError, sqlite3.Error) as exc:
+                    st.error(str(exc))
+                else:
+                    st.session_state["review_notice"] = "Review saved."
+                    st.rerun()
+        st.markdown("#### Incident history")
+        scope = st.radio("History scope", ["Selected session", "All reviewed sessions"], horizontal=True)
+        archive = history
+        if scope == "All reviewed sessions":
+            archive = sorted((entry for session_id in list_sessions(db_path)
+                              for entry in review_history(session_id, db_path)),
+                             key=lambda entry: entry["review_id"], reverse=True)
+        if archive:
+            fields = {"reviewed_at_utc": "Time (UTC)", "signal_id": "Signal ID", "disposition": "Decision",
+                      "session_id": "Session", "coordinator_name": "Operator",
+                      "coordinator_role": "Role", "notes": "Notes"}
+            st.dataframe(pd.DataFrame(archive)[list(fields)].rename(columns=fields),
+                         hide_index=True, use_container_width=True)
+        else:
+            st.caption("No operator decisions recorded.")
+    st.markdown("#### Export evidence")
+    name = "training-preview" if preview else "session"
+    st.download_button("Download incident evidence CSV", evidence_csv(rows, rules, history),
+                       f"{name}-evidence.csv", "text/csv")
+    report = {"session_id": selected["session_id"], "detections": rows, "reviews": history}
+    st.download_button("Download JSON report", json.dumps(report, indent=2), f"{name}.json", "application/json")
+
+
+def _clear_preview():
+    st.session_state.pop("case_preview", None)
+
+
 def render_dashboard(pipeline_callback) -> None:
     db_path = os.environ.get("KAAVALU_DB_PATH", "kaavalu.db")
     init_db(db_path)
     rules = get_auth_rules(db_path)
-    st.title("DisasterNet")
-    st.caption("Offline spectrum coordination · Physical signal measurements only · Unknown signals require human review.")
-    st.sidebar.header("Capture")
-    if pipeline_callback is None:
+    st.markdown("""<style>
+      .main .block-container {max-width:82rem; padding-top:3.4rem;}
+      [data-testid="stSidebar"] {border-right:1px solid #aab7bd55;}
+      h1,h2,h3,h4 {letter-spacing:-.025em;}
+      .verdict {border-left:5px solid;padding:.55rem 1rem;margin:.5rem 0;
+                background:rgba(109,133,148,.09);border-radius:3px;}
+      .verdict small,.verdict strong {display:block;}
+      .verdict strong {font:600 clamp(1rem,3vw,1.35rem) ui-monospace,monospace;overflow-wrap:anywhere;}
+      [data-testid="stMetricValue"] {font-size:clamp(1.05rem,2vw,1.8rem);}
+      @media(max-width:650px){.main .block-container{padding:3.2rem 1rem 1rem;}}
+    </style>""", unsafe_allow_html=True)
+    st.title("KAAVALU · Incident monitor")
+    st.caption("DisasterNet  /  Offline spectrum coordination")
+    if "review_notice" in st.session_state:
+        st.success(st.session_state.pop("review_notice"))
+    st.sidebar.header("Capture controls")
+    choices = list(SCENARIOS) + ([CUSTOM] if pipeline_callback is not None else []) + [PACKET]
+    choice = st.sidebar.radio("Input scenario", choices)
+    source = SCENARIOS.get(choice)
+    packet = None
+    if choice == CUSTOM:
+        source = st.sidebar.text_input(CUSTOM, "familiar_clear")
+    if choice == PACKET:
         upload = st.sidebar.file_uploader("Laptop 2 replay ZIP", type="zip")
         default = Path("KAAVALU-Laptop-2-Replay.zip")
         packet = upload if upload is not None else default if default.is_file() else None
-        run = st.sidebar.button("Load saved replay", disabled=packet is None)
-    else:
-        source = st.sidebar.text_input("Scenario or recording path", "familiar_clear")
-        run = st.sidebar.button("Run analysis")
+    if choice == AUTHORIZED:
+        st.sidebar.caption("Measured QPSK evaluated against an isolated training rule with no power requirement.")
+    if choice == HYPOTHETICAL:
+        st.sidebar.caption("Prepared policy example with an assumed −20 dBm input.")
+    run = st.sidebar.button("Load saved replay" if choice == PACKET else "Run analysis",
+                            disabled=choice == PACKET and packet is None, type="primary")
     if run:
         try:
-            if pipeline_callback is None:
+            if choice == PACKET:
                 records, metadata = _read_packet(packet)
+            elif pipeline_callback is None:
+                records, metadata = builtin_input(source)
             else:
                 records, metadata = pipeline_callback(source, rules)
-            rows = check_authorization(records, rules)
-            save_detected_signals(rows, db_path)
-        except (ValueError, OSError, KeyError, BadZipFile, sqlite3.Error) as exc:
+            records, evaluation_rules = prepare_case(choice, records, rules)
+            checked = evaluate(records, evaluation_rules)
+            if choice in (AUTHORIZED, HYPOTHETICAL):
+                st.session_state["case_preview"] = (checked, metadata, evaluation_rules, choice)
+            else:
+                _clear_preview()
+                save_detected_signals(checked, db_path)
+                session = checked[0]["session_id"] if checked else None
+                st.session_state["active_display"] = (session, metadata)
+                if session:
+                    st.session_state["session_picker"] = session
+                else:
+                    st.subheader(metadata.get("source_tag", "Source unavailable"))
+                    st.info("No signals detected in this capture.")
+                    fig = spectrum(metadata, [], None, rules)
+                    if fig is not None:
+                        st.plotly_chart(fig, use_container_width=True)
+                    return
+        except (ModuleNotFoundError, ValueError, OSError, KeyError, BadZipFile, sqlite3.Error) as exc:
             st.error(f"Capture could not be loaded: {exc}")
             return
-        if rows:
-            st.session_state["session_picker"] = rows[0]["session_id"]
-        st.session_state["active_display"] = (rows[0]["session_id"] if rows else None, metadata)
-        if not rows:
-            st.info(f"{metadata.get('source_tag', 'Source unavailable')} · No detections in this capture.")
-            _spectrum(metadata, [], rules)
-            return
     sessions = list_sessions(db_path)
-    session = st.sidebar.selectbox("Stored session", sessions, key="session_picker") if sessions else None
-    rows = load_session(session, db_path) if session else []
-    active, meta = st.session_state.get("active_display", (None, {}))
-    meta = meta if active == session else {}
-    source_label = ", ".join(sorted({r["source_tag"] for r in rows})) or meta.get("source_tag", "No capture selected")
-    st.subheader(source_label)
-    evidence, policies, review = st.tabs(["Signal evidence", "Demonstration rules", "Coordinator review"])
+    session = st.sidebar.selectbox("Stored session", sessions, key="session_picker",
+                                   on_change=_clear_preview) if sessions else None
+    preview = st.session_state.get("case_preview")
+    if preview:
+        rows, meta, active_rules, label = preview
+        history = []
+        st.info(f"Training preview · {label}. Excluded from stored incidents.")
+        st.button("Return to stored incidents", on_click=_clear_preview)
+    else:
+        rows = load_session(session, db_path) if session else []
+        active, meta = st.session_state.get("active_display", (None, {}))
+        meta = meta if active == session else {}
+        active_rules = rules
+        history = review_history(session, db_path) if session else []
+    sources = sorted({r["source_tag"] for r in rows})
+    st.subheader(" / ".join(sources) if sources else "No capture selected")
+    evidence, review, policies = st.tabs(["Signal evidence", "Incident review & export", "Demonstration rules"])
     with evidence:
-        _evidence(rows, meta, rules)
-    with policies:
-        _edit_rules(rules, rows, db_path)
+        if rows:
+            selected = _evidence(rows, meta, active_rules, history)
+        else:
+            st.info("Select an input in Capture controls and run analysis.")
     with review:
-        _reviews(rows, session, db_path)
+        if rows:
+            _reviews(rows, selected, active_rules, history, db_path, bool(preview))
+        else:
+            st.caption("Load a session to review or export evidence.")
+    with policies:
+        if preview:
+            st.caption("Return to stored incidents to edit the coordinator's rules.")
+        else:
+            _edit_rules(rules, rows, db_path)
