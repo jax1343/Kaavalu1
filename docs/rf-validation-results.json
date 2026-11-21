@@ -1,0 +1,2825 @@
+{
+  "python": "3.11.9",
+  "numpy": "1.26.4",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "model_id": "kaavalu-synthetic-knn-lof-v1",
+  "reference_fit_ms": 10766.623899999104,
+  "rules": [
+    {
+      "rule_id": "EM-POL-01",
+      "agency_corridor": "Police Tactical & Traffic Dispatch",
+      "coordinator_role": "Police Comms Coordinator",
+      "freq_min_mhz": 148,
+      "freq_max_mhz": 148.15,
+      "allowed_modulations": [
+        "GFSK",
+        "FM-NB"
+      ],
+      "max_bw_khz": 25,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-FIR-02",
+      "agency_corridor": "Fire & Hazmat Tactical Net",
+      "coordinator_role": "Fireground Frequency Coordinator",
+      "freq_min_mhz": 148.15,
+      "freq_max_mhz": 148.3,
+      "allowed_modulations": [
+        "FM-NB",
+        "GFSK"
+      ],
+      "max_bw_khz": 25,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-AMB-03",
+      "agency_corridor": "Ambulance & EMS Medical Telemetry",
+      "coordinator_role": "EMS Medical Dispatch Coordinator",
+      "freq_min_mhz": 148.3,
+      "freq_max_mhz": 148.45,
+      "allowed_modulations": [
+        "GFSK",
+        "BPSK"
+      ],
+      "max_bw_khz": 35,
+      "max_power_dbm": -20,
+      "priority_tier": "CRITICAL"
+    },
+    {
+      "rule_id": "EM-RES-04",
+      "agency_corridor": "Disaster Search & Rescue (NDRF / SAR)",
+      "coordinator_role": "Rescue Operations Coordinator",
+      "freq_min_mhz": 148.45,
+      "freq_max_mhz": 148.65,
+      "allowed_modulations": [
+        "QPSK",
+        "GFSK"
+      ],
+      "max_bw_khz": 50,
+      "max_power_dbm": -10,
+      "priority_tier": "HIGH"
+    },
+    {
+      "rule_id": "EM-AIR-05",
+      "agency_corridor": "Relief Helicopter Air-to-Ground SAR",
+      "coordinator_role": "Aviation SAR Coordinator",
+      "freq_min_mhz": 148.65,
+      "freq_max_mhz": 148.85,
+      "allowed_modulations": [
+        "AM-DSB"
+      ],
+      "max_bw_khz": 30,
+      "max_power_dbm": -15,
+      "priority_tier": "CRITICAL"
+    }
+  ],
+  "rules_sha256": "3c1f03ad36edeea28c7a564e75e1ad0e19e634d93d70c9479405edf03382200e",
+  "scenarios": {
+    "familiar_clear": {
+      "expected": {
+        "predicted_modulation": "QPSK",
+        "matched_rule_id": null,
+        "verdict_category": "RECOGNIZED_NO_AUTH_RECORD"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "a0beec8d5fff306f677d/b1",
+          "source_tag": "SIMULATED",
+          "sha256": "5e170a5a3614ce92de6d8e56dee634319f8a0781612faa9e549ba9d71b3f4019",
+          "sample_count": 9472,
+          "center_freq_hz": 150017956.22905806,
+          "occupied_bw_khz": 16.125,
+          "snr_db": 22.656243735576098,
+          "peak_power_dbm": null,
+          "calibration_status": "UNCALIBRATED",
+          "model_id": "kaavalu-synthetic-knn-lof-v1",
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.36971767956126333,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "matched_rule_id": null,
+          "verdict_category": "RECOGNIZED_NO_AUTH_RECORD",
+          "explainable_reason": "150.017956 MHz \u00b7 1 burst(s) within 20 kHz. QPSK recognized outside the configured demonstration corridors."
+        }
+      ],
+      "inputs": {
+        "file": "fixtures/familiar_clear.npz"
+      },
+      "capture_id": "a0beec8d5fff306f677d",
+      "sha256": "5e170a5a3614ce92de6d8e56dee634319f8a0781612faa9e549ba9d71b3f4019",
+      "policy_override": null,
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 40.641299998242175
+    },
+    "authorized_qpsk": {
+      "expected": {
+        "predicted_modulation": "QPSK",
+        "matched_rule_id": "EM-RES-04",
+        "verdict_category": "KNOWN_AUTHORIZED"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "1c261557c3dba0f6ee5a/b1",
+          "source_tag": "SIMULATED",
+          "sha256": "1b575109db74550fbe600564cc71b6ab3db8e62c13dadbe79d6ab06ccc0762ab",
+          "sample_count": 9472,
+          "center_freq_hz": 148549956.22905734,
+          "occupied_bw_khz": 16.125,
+          "snr_db": 22.65624374250705,
+          "peak_power_dbm": null,
+          "calibration_status": "UNCALIBRATED",
+          "model_id": "kaavalu-synthetic-knn-lof-v1",
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.36971380418321664,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "matched_rule_id": "EM-RES-04",
+          "verdict_category": "KNOWN_AUTHORIZED",
+          "explainable_reason": "148.549956 MHz \u00b7 1 burst(s) within 20 kHz. Measurements match the configured demonstration rule."
+        }
+      ],
+      "inputs": {
+        "family": "QPSK",
+        "seed": 81001,
+        "tuning_hz": 148532000,
+        "offset_hz": 18000
+      },
+      "capture_id": "1c261557c3dba0f6ee5a",
+      "sha256": "1b575109db74550fbe600564cc71b6ab3db8e62c13dadbe79d6ab06ccc0762ab",
+      "policy_override": {
+        "rule_id": "EM-RES-04",
+        "max_power_dbm": null
+      },
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 32.770500001788605
+    },
+    "fire_wide": {
+      "expected": {
+        "predicted_modulation": "WB-FM",
+        "matched_rule_id": "EM-FIR-02",
+        "verdict_category": "UNKNOWN"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "ceeb9b206566d627a37f/b1",
+          "source_tag": "SIMULATED",
+          "sha256": "e221ca1e4cd96b4b9665f73f66f217df9949cdeebda80fd6582446f92484241a",
+          "sample_count": 10240,
+          "center_freq_hz": 148225080.52419698,
+          "occupied_bw_khz": 33.0,
+          "snr_db": 19.193125414188906,
+          "peak_power_dbm": null,
+          "calibration_status": "UNCALIBRATED",
+          "model_id": "kaavalu-synthetic-knn-lof-v1",
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.18490317507348197,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "matched_rule_id": "EM-FIR-02",
+          "verdict_category": "UNKNOWN",
+          "explainable_reason": "148.225081 MHz \u00b7 1 burst(s) within 20 kHz. Power unavailable. This corridor requires calibrated power. Human review required."
+        }
+      ],
+      "inputs": {
+        "family": "WB-FM",
+        "seed": 61080,
+        "tuning_hz": 148225000,
+        "offset_hz": 0
+      },
+      "capture_id": "ceeb9b206566d627a37f",
+      "sha256": "e221ca1e4cd96b4b9665f73f66f217df9949cdeebda80fd6582446f92484241a",
+      "policy_override": null,
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 66.11580000026152
+    },
+    "fire_rule_only": {
+      "expected": {
+        "predicted_modulation": "WB-FM",
+        "matched_rule_id": "EM-FIR-02",
+        "verdict_category": "POTENTIALLY_UNAUTHORIZED"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "ceeb9b206566d627a37f/b1/rule-only",
+          "source_tag": "SIMULATED",
+          "sha256": "e221ca1e4cd96b4b9665f73f66f217df9949cdeebda80fd6582446f92484241a",
+          "sample_count": 10240,
+          "center_freq_hz": 148225080.52419698,
+          "occupied_bw_khz": 33.0,
+          "snr_db": 19.193125414188906,
+          "peak_power_dbm": -20.0,
+          "calibration_status": "HYPOTHETICAL_RULE_INPUT",
+          "model_id": "kaavalu-synthetic-knn-lof-v1",
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.18490317507348197,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "matched_rule_id": "EM-FIR-02",
+          "verdict_category": "POTENTIALLY_UNAUTHORIZED",
+          "explainable_reason": "148.225081 MHz \u00b7 1 burst(s) within 20 kHz. WB-FM is outside the permitted modulation list. bandwidth 33 kHz exceeds 28.75 kHz including tolerance. Review against the demonstration rule."
+        }
+      ],
+      "inputs": {
+        "peak_power_dbm": -20.0,
+        "calibration_status": "HYPOTHETICAL_RULE_INPUT"
+      },
+      "parent_capture": "ceeb9b206566d627a37f",
+      "kind": "rule-only, in memory"
+    },
+    "unfamiliar_clear": {
+      "expected": {
+        "predicted_modulation": "UNKNOWN",
+        "matched_rule_id": null,
+        "verdict_category": "UNKNOWN"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "b74d6a8e454530e5f9ad/b1",
+          "source_tag": "SIMULATED",
+          "sha256": "7fc37d8f4d358e22535aa99ece5050ad777cbaa410c3294d8d68b7a15e7c6113",
+          "sample_count": 10752,
+          "center_freq_hz": 150018047.42066443,
+          "occupied_bw_khz": 21.0,
+          "snr_db": 21.441374363450734,
+          "peak_power_dbm": null,
+          "calibration_status": "UNCALIBRATED",
+          "model_id": "kaavalu-synthetic-knn-lof-v1",
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.8667395666618499,
+          "lof_normality_score": -0.4283967072338375,
+          "clf_reason": "Novel waveform (LOF -0.428 < -0.08)",
+          "matched_rule_id": null,
+          "verdict_category": "UNKNOWN",
+          "explainable_reason": "150.018047 MHz \u00b7 1 burst(s) within 20 kHz. The classifier could not identify this signal reliably. Human review required."
+        }
+      ],
+      "inputs": {
+        "family": "16-QAM",
+        "seed": 91001,
+        "offset_hz": 18000
+      },
+      "capture_id": "b74d6a8e454530e5f9ad",
+      "sha256": "7fc37d8f4d358e22535aa99ece5050ad777cbaa410c3294d8d68b7a15e7c6113",
+      "policy_override": null,
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 52.96250000174041
+    },
+    "weak_qpsk": {
+      "expected": {
+        "predicted_modulation": "UNKNOWN",
+        "matched_rule_id": null,
+        "verdict_category": "UNKNOWN"
+      },
+      "passed": true,
+      "records": [
+        {
+          "signal_id": "c43104c49b95bd94bf4a/b1",
+          "source_tag": "SIMULATED",
+          "sha256": "19382c4af559bf25ec55920fa8f8fae4710bb7d34df671864e000f34dbc5aff4",
+          "sample_count": 9216,
+          "center_freq_hz": 150017894.7785967,
+          "occupied_bw_khz": 15.75,
+          "snr_db": 7.598022533214685,
+          "peak_power_dbm": null,
+          "calibration_status": "UNCALIBRATED",
+          "model_id": null,
+          "candidate_modulation": null,
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": null,
+          "lof_normality_score": null,
+          "clf_reason": "Low SNR (7.598 dB < 8.0 dB)",
+          "matched_rule_id": null,
+          "verdict_category": "UNKNOWN",
+          "explainable_reason": "150.017895 MHz \u00b7 1 burst(s) within 20 kHz. SNR is unavailable or below 8 dB. Human review required."
+        }
+      ],
+      "inputs": {
+        "family": "QPSK",
+        "seed": 81001,
+        "offset_hz": 18000,
+        "added_noise_db": 16
+      },
+      "capture_id": "c43104c49b95bd94bf4a",
+      "sha256": "19382c4af559bf25ec55920fa8f8fae4710bb7d34df671864e000f34dbc5aff4",
+      "policy_override": null,
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 38.18150000006426
+    },
+    "missed_qpsk": {
+      "expected": {
+        "detections": 0
+      },
+      "passed": true,
+      "records": [],
+      "inputs": {
+        "family": "QPSK",
+        "seed": 81001,
+        "offset_hz": 18000,
+        "added_noise_db": 18
+      },
+      "capture_id": "d655826b98cd52b0c2fb",
+      "sha256": "d0f8a8ecb4e56ac8831b41ef608739db5d61723be94d337a62099a2dba34d21e",
+      "policy_override": null,
+      "source_tag": "SIMULATED",
+      "sqlite_round_trip": true,
+      "latency_ms": 19.582100001571234
+    }
+  },
+  "scores": {
+    "confusion": {
+      "GFSK": {
+        "GFSK": 16
+      },
+      "FM-NB": {
+        "FM-NB": 11,
+        "UNKNOWN": 3,
+        "GFSK": 2
+      },
+      "BPSK": {
+        "BPSK": 16
+      },
+      "QPSK": {
+        "QPSK": 16
+      },
+      "AM-DSB": {
+        "AM-DSB": 16
+      },
+      "WB-FM": {
+        "WB-FM": 16
+      },
+      "UNKNOWN": {
+        "UNKNOWN": 12
+      }
+    },
+    "per_class": {
+      "GFSK": {
+        "support": 16,
+        "tp": 16,
+        "fp": 2,
+        "fn": 0,
+        "precision": 0.8888888888888888,
+        "recall": 1.0,
+        "false_positive_rate": 0.021739130434782608
+      },
+      "FM-NB": {
+        "support": 16,
+        "tp": 11,
+        "fp": 0,
+        "fn": 5,
+        "precision": 1.0,
+        "recall": 0.6875,
+        "false_positive_rate": 0.0
+      },
+      "BPSK": {
+        "support": 16,
+        "tp": 16,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0
+      },
+      "QPSK": {
+        "support": 16,
+        "tp": 16,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0
+      },
+      "AM-DSB": {
+        "support": 16,
+        "tp": 16,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0
+      },
+      "WB-FM": {
+        "support": 16,
+        "tp": 16,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "false_positive_rate": 0.0
+      },
+      "UNKNOWN": {
+        "support": 12,
+        "tp": 12,
+        "fp": 3,
+        "fn": 0,
+        "precision": 0.8,
+        "recall": 1.0,
+        "false_positive_rate": 0.03125
+      }
+    },
+    "known_accuracy": 0.9479166666666666,
+    "overall_accuracy": 0.9537037037037037,
+    "unfamiliar_accepted": 0,
+    "known_sent_to_review": 3
+  },
+  "trials": [
+    {
+      "seed": 73000,
+      "family": "GFSK",
+      "added_noise_db": 0,
+      "prediction": "GFSK",
+      "latency_ms": 29.397300000709947,
+      "detections": [
+        {
+          "signal_id": "994c79d90abcf1fd2082/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149997285.83458123,
+          "occupied_bw_hz": 13500.0,
+          "snr_db": 22.73430512927433,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3871524356721182,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73001,
+      "family": "GFSK",
+      "added_noise_db": 2,
+      "prediction": "GFSK",
+      "latency_ms": 29.054399998130975,
+      "detections": [
+        {
+          "signal_id": "afbc14e54ff298d063f6/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149987328.5967823,
+          "occupied_bw_hz": 14625.0,
+          "snr_db": 20.84720516511903,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4089755658420863,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73002,
+      "family": "GFSK",
+      "added_noise_db": 4,
+      "prediction": "GFSK",
+      "latency_ms": 27.40329999869573,
+      "detections": [
+        {
+          "signal_id": "30fea5d6a0acd1650eef/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150019762.47170338,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 18.21654190897511,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.37786145026421836,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73003,
+      "family": "GFSK",
+      "added_noise_db": 6,
+      "prediction": "GFSK",
+      "latency_ms": 29.324899998755427,
+      "detections": [
+        {
+          "signal_id": "60255a843fdc396d0f97/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993496.86548346,
+          "occupied_bw_hz": 18750.0,
+          "snr_db": 15.98268775319016,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4003536403726464,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73004,
+      "family": "GFSK",
+      "added_noise_db": 8,
+      "prediction": "GFSK",
+      "latency_ms": 38.07510000115144,
+      "detections": [
+        {
+          "signal_id": "8c2d08543ad08092da00/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149992721.1429902,
+          "occupied_bw_hz": 13875.0,
+          "snr_db": 15.354399473327106,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4059216628671163,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73005,
+      "family": "GFSK",
+      "added_noise_db": 0,
+      "prediction": "GFSK",
+      "latency_ms": 28.490599997894606,
+      "detections": [
+        {
+          "signal_id": "73491a2dba53b2fc820a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149975015.67826828,
+          "occupied_bw_hz": 15000.0,
+          "snr_db": 22.549313276761932,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.40112259087358637,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73006,
+      "family": "GFSK",
+      "added_noise_db": 2,
+      "prediction": "GFSK",
+      "latency_ms": 28.734400002576876,
+      "detections": [
+        {
+          "signal_id": "66402c26d52e57a78acc/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150020561.67263117,
+          "occupied_bw_hz": 12750.0,
+          "snr_db": 21.097506773477413,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 0.8802464144356432,
+          "lof_normality_score": 0.38322147170871634,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73007,
+      "family": "GFSK",
+      "added_noise_db": 4,
+      "prediction": "GFSK",
+      "latency_ms": 34.97349999815924,
+      "detections": [
+        {
+          "signal_id": "b8768991ffa5233e9b60/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149991481.48769376,
+          "occupied_bw_hz": 21375.0,
+          "snr_db": 17.46018884810297,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4234415221735808,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73008,
+      "family": "GFSK",
+      "added_noise_db": 6,
+      "prediction": "GFSK",
+      "latency_ms": 26.75239999734913,
+      "detections": [
+        {
+          "signal_id": "93d4f9ec5ff7481396fd/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150031864.04812047,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 16.535197041573383,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4344346003772329,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73009,
+      "family": "GFSK",
+      "added_noise_db": 8,
+      "prediction": "GFSK",
+      "latency_ms": 31.554199998936383,
+      "detections": [
+        {
+          "signal_id": "3e7cd3845c21fa0f0e62/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150028943.468583,
+          "occupied_bw_hz": 14625.0,
+          "snr_db": 15.128007796696085,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3663653911866509,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73010,
+      "family": "GFSK",
+      "added_noise_db": 0,
+      "prediction": "GFSK",
+      "latency_ms": 37.17049999977462,
+      "detections": [
+        {
+          "signal_id": "9bead7e0c7b646e33544/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150023026.20385328,
+          "occupied_bw_hz": 19500.0,
+          "snr_db": 21.50881263937537,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3751624037489738,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73011,
+      "family": "GFSK",
+      "added_noise_db": 2,
+      "prediction": "GFSK",
+      "latency_ms": 36.291199998231605,
+      "detections": [
+        {
+          "signal_id": "1c2b44926d294a05399c/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150014659.73576447,
+          "occupied_bw_hz": 21375.0,
+          "snr_db": 19.25707069255884,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3977721122012158,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73012,
+      "family": "GFSK",
+      "added_noise_db": 4,
+      "prediction": "GFSK",
+      "latency_ms": 31.362300000182586,
+      "detections": [
+        {
+          "signal_id": "3ef06e77771525d15c35/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150024163.61842513,
+          "occupied_bw_hz": 13125.0,
+          "snr_db": 19.48064596237981,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 0.9060628204203742,
+          "lof_normality_score": 0.3169696715298347,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73013,
+      "family": "GFSK",
+      "added_noise_db": 6,
+      "prediction": "GFSK",
+      "latency_ms": 28.497300001617987,
+      "detections": [
+        {
+          "signal_id": "965f572719f1c65daffc/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149973509.24463478,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 16.617690185052037,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.42503114849976875,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73014,
+      "family": "GFSK",
+      "added_noise_db": 8,
+      "prediction": "GFSK",
+      "latency_ms": 30.147900000883965,
+      "detections": [
+        {
+          "signal_id": "db7b0ff4b55e7c2fafd3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150013328.80143505,
+          "occupied_bw_hz": 15000.0,
+          "snr_db": 15.2588814929592,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.37936261383965486,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73015,
+      "family": "GFSK",
+      "added_noise_db": 0,
+      "prediction": "GFSK",
+      "latency_ms": 36.813599999732105,
+      "detections": [
+        {
+          "signal_id": "94765a38c83c834b725b/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149974688.83568606,
+          "occupied_bw_hz": 12750.0,
+          "snr_db": 23.13295989482272,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 0.8903546350645518,
+          "lof_normality_score": 0.34717673196260646,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73016,
+      "family": "FM-NB",
+      "added_noise_db": 0,
+      "prediction": "FM-NB",
+      "latency_ms": 32.59489999982179,
+      "detections": [
+        {
+          "signal_id": "35d0610e668b3469652a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150008819.3150481,
+          "occupied_bw_hz": 6750.0,
+          "snr_db": 24.98209210071927,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3284283695860548,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73017,
+      "family": "FM-NB",
+      "added_noise_db": 2,
+      "prediction": "FM-NB",
+      "latency_ms": 26.983300002029864,
+      "detections": [
+        {
+          "signal_id": "a55f9aaaadbd9aa1441e/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993500.2100101,
+          "occupied_bw_hz": 5625.0,
+          "snr_db": 23.529318712802937,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.38707656642143484,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73018,
+      "family": "FM-NB",
+      "added_noise_db": 4,
+      "prediction": "UNKNOWN",
+      "latency_ms": 30.585200001951307,
+      "detections": [
+        {
+          "signal_id": "6ab66339b71d81702b6d/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150018145.84468788,
+          "occupied_bw_hz": 9000.0,
+          "snr_db": 20.480791103638513,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.6425076163314395,
+          "lof_normality_score": 0.3748184202107381,
+          "clf_reason": "Ambiguous vote (0.643 < 0.680)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73019,
+      "family": "FM-NB",
+      "added_noise_db": 6,
+      "prediction": "FM-NB",
+      "latency_ms": 27.982400002656505,
+      "detections": [
+        {
+          "signal_id": "d602f13c3c3e8a839ba0/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149980850.80825287,
+          "occupied_bw_hz": 7875.0,
+          "snr_db": 18.960698351612844,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3974218603070496,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73020,
+      "family": "FM-NB",
+      "added_noise_db": 8,
+      "prediction": "FM-NB",
+      "latency_ms": 27.02060000228812,
+      "detections": [
+        {
+          "signal_id": "7a6293f7aa9aa1357653/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149988939.4014475,
+          "occupied_bw_hz": 6000.0,
+          "snr_db": 18.301754820518497,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.2600886283523398,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73021,
+      "family": "FM-NB",
+      "added_noise_db": 0,
+      "prediction": "FM-NB",
+      "latency_ms": 27.05950000017765,
+      "detections": [
+        {
+          "signal_id": "6dde69ea3fad158e759e/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150007098.76872295,
+          "occupied_bw_hz": 5625.0,
+          "snr_db": 25.604729077251356,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.29653329430855013,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73022,
+      "family": "FM-NB",
+      "added_noise_db": 2,
+      "prediction": "FM-NB",
+      "latency_ms": 32.13570000298205,
+      "detections": [
+        {
+          "signal_id": "60b3a8fa2889858f8cf6/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149997674.61641282,
+          "occupied_bw_hz": 8625.0,
+          "snr_db": 22.111900373727643,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 0.9409216851924131,
+          "lof_normality_score": 0.38587162100521866,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73023,
+      "family": "FM-NB",
+      "added_noise_db": 4,
+      "prediction": "FM-NB",
+      "latency_ms": 32.22190000087721,
+      "detections": [
+        {
+          "signal_id": "f63cbaefdc919062ecc1/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150027291.33697897,
+          "occupied_bw_hz": 6750.0,
+          "snr_db": 21.134304135697782,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4021450404113702,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73024,
+      "family": "FM-NB",
+      "added_noise_db": 6,
+      "prediction": "FM-NB",
+      "latency_ms": 29.250599996885285,
+      "detections": [
+        {
+          "signal_id": "238de65509e54a3bf8b7/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150025457.92948616,
+          "occupied_bw_hz": 7875.0,
+          "snr_db": 19.13652115255003,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 0.6929617749080388,
+          "lof_normality_score": 0.3533663027344518,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73025,
+      "family": "FM-NB",
+      "added_noise_db": 8,
+      "prediction": "GFSK",
+      "latency_ms": 30.950300002587028,
+      "detections": [
+        {
+          "signal_id": "072db267e92c193d7cc7/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150034860.05883142,
+          "occupied_bw_hz": 8625.0,
+          "snr_db": 17.073154415947684,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 0.8506039803167139,
+          "lof_normality_score": 0.28160230753733106,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73026,
+      "family": "FM-NB",
+      "added_noise_db": 0,
+      "prediction": "FM-NB",
+      "latency_ms": 27.98330000223359,
+      "detections": [
+        {
+          "signal_id": "4b6eacee007c972f846c/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150028195.55374953,
+          "occupied_bw_hz": 7875.0,
+          "snr_db": 24.13550314035321,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.2895928670911647,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73027,
+      "family": "FM-NB",
+      "added_noise_db": 2,
+      "prediction": "UNKNOWN",
+      "latency_ms": 26.72769999844604,
+      "detections": [
+        {
+          "signal_id": "89406fcd94247e167ff4/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149985964.68298462,
+          "occupied_bw_hz": 6750.0,
+          "snr_db": 23.057721840917104,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.5532385311738003,
+          "lof_normality_score": 0.21374438550865338,
+          "clf_reason": "Ambiguous vote (0.553 < 0.680)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73028,
+      "family": "FM-NB",
+      "added_noise_db": 4,
+      "prediction": "UNKNOWN",
+      "latency_ms": 28.95189999981085,
+      "detections": [
+        {
+          "signal_id": "0aa58c8d4cdda96e4b8a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149978827.7896597,
+          "occupied_bw_hz": 8625.0,
+          "snr_db": 20.70938060753219,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.6681390668349044,
+          "lof_normality_score": 0.3847671356632446,
+          "clf_reason": "Ambiguous vote (0.668 < 0.680)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73029,
+      "family": "FM-NB",
+      "added_noise_db": 6,
+      "prediction": "FM-NB",
+      "latency_ms": 28.176599997095764,
+      "detections": [
+        {
+          "signal_id": "1b4f6d04dc275677ac4d/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149978451.91267103,
+          "occupied_bw_hz": 6000.0,
+          "snr_db": 19.53597500410737,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.013592595796117823,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73030,
+      "family": "FM-NB",
+      "added_noise_db": 8,
+      "prediction": "FM-NB",
+      "latency_ms": 27.212400000280468,
+      "detections": [
+        {
+          "signal_id": "b3b982e05ec5e6ac4b04/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149990449.21349567,
+          "occupied_bw_hz": 4500.0,
+          "snr_db": 18.727840294548283,
+          "candidate_modulation": "FM-NB",
+          "predicted_modulation": "FM-NB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.33337691739671316,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73031,
+      "family": "FM-NB",
+      "added_noise_db": 0,
+      "prediction": "GFSK",
+      "latency_ms": 27.514999997947598,
+      "detections": [
+        {
+          "signal_id": "7a218b15e76f41918f52/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149970982.24950305,
+          "occupied_bw_hz": 9000.0,
+          "snr_db": 23.95067480143264,
+          "candidate_modulation": "GFSK",
+          "predicted_modulation": "GFSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.11905518549497884,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73032,
+      "family": "BPSK",
+      "added_noise_db": 0,
+      "prediction": "BPSK",
+      "latency_ms": 28.944999998202547,
+      "detections": [
+        {
+          "signal_id": "308a2729cb4cba4921ce/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150004838.306838,
+          "occupied_bw_hz": 14250.0,
+          "snr_db": 23.017417542820926,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.387615279769163,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73033,
+      "family": "BPSK",
+      "added_noise_db": 2,
+      "prediction": "BPSK",
+      "latency_ms": 32.40739999819198,
+      "detections": [
+        {
+          "signal_id": "5307e0bf4da832be6ab1/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150005563.92657742,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 20.241848282657187,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3925755815669576,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73034,
+      "family": "BPSK",
+      "added_noise_db": 4,
+      "prediction": "BPSK",
+      "latency_ms": 30.77330000087386,
+      "detections": [
+        {
+          "signal_id": "b9c455cd9a70ec722ec5/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149999583.20276296,
+          "occupied_bw_hz": 13875.0,
+          "snr_db": 19.116123422711496,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4138632920820957,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73035,
+      "family": "BPSK",
+      "added_noise_db": 6,
+      "prediction": "BPSK",
+      "latency_ms": 30.20699999979115,
+      "detections": [
+        {
+          "signal_id": "b0f9fe23e28ebd917425/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150012819.58740792,
+          "occupied_bw_hz": 13875.0,
+          "snr_db": 17.30108634319197,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.326712554194897,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73036,
+      "family": "BPSK",
+      "added_noise_db": 8,
+      "prediction": "BPSK",
+      "latency_ms": 33.66749999986496,
+      "detections": [
+        {
+          "signal_id": "d3d5a4926d223a97dc43/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150007200.93750218,
+          "occupied_bw_hz": 15375.0,
+          "snr_db": 15.38119983624485,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3472613328740173,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73037,
+      "family": "BPSK",
+      "added_noise_db": 0,
+      "prediction": "BPSK",
+      "latency_ms": 28.666899997915607,
+      "detections": [
+        {
+          "signal_id": "3b135e320e5fff2c6e6d/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149990912.9211898,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 22.17416016310684,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4009017324410947,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73038,
+      "family": "BPSK",
+      "added_noise_db": 2,
+      "prediction": "BPSK",
+      "latency_ms": 28.020999998261686,
+      "detections": [
+        {
+          "signal_id": "9d14011b2cb46339a615/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150017979.68775538,
+          "occupied_bw_hz": 15375.0,
+          "snr_db": 20.883545587961457,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4059504289377065,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73039,
+      "family": "BPSK",
+      "added_noise_db": 4,
+      "prediction": "BPSK",
+      "latency_ms": 28.19219999946654,
+      "detections": [
+        {
+          "signal_id": "a5e01ee75102803680d5/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150011707.0305825,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 17.703415404459818,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.35952231104397625,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73040,
+      "family": "BPSK",
+      "added_noise_db": 6,
+      "prediction": "BPSK",
+      "latency_ms": 27.997500001220033,
+      "detections": [
+        {
+          "signal_id": "38dadc730cdbadf74d6c/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149989333.94884253,
+          "occupied_bw_hz": 14250.0,
+          "snr_db": 17.298694213265144,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3730202036156103,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73041,
+      "family": "BPSK",
+      "added_noise_db": 8,
+      "prediction": "BPSK",
+      "latency_ms": 29.58540000327048,
+      "detections": [
+        {
+          "signal_id": "a6f934ba08a5ebed7e73/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150029999.41562644,
+          "occupied_bw_hz": 15375.0,
+          "snr_db": 15.19313492035285,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.40853763422558753,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73042,
+      "family": "BPSK",
+      "added_noise_db": 0,
+      "prediction": "BPSK",
+      "latency_ms": 29.49120000266703,
+      "detections": [
+        {
+          "signal_id": "b80526b9a9a66e020995/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149991341.93565536,
+          "occupied_bw_hz": 14625.0,
+          "snr_db": 23.129495026473798,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3838102799576465,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73043,
+      "family": "BPSK",
+      "added_noise_db": 2,
+      "prediction": "BPSK",
+      "latency_ms": 27.5048000003153,
+      "detections": [
+        {
+          "signal_id": "bea38d1495ef107e5493/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149968574.0971627,
+          "occupied_bw_hz": 19500.0,
+          "snr_db": 19.92180169087166,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.36078560091622625,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73044,
+      "family": "BPSK",
+      "added_noise_db": 4,
+      "prediction": "BPSK",
+      "latency_ms": 29.397800000879215,
+      "detections": [
+        {
+          "signal_id": "efc9ec4a91c7258642fb/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149975913.61867815,
+          "occupied_bw_hz": 19500.0,
+          "snr_db": 18.040930682312727,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.38339684062245605,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73045,
+      "family": "BPSK",
+      "added_noise_db": 6,
+      "prediction": "BPSK",
+      "latency_ms": 27.65509999881033,
+      "detections": [
+        {
+          "signal_id": "f9ff64c3ce8d5c79eab3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150007332.0033421,
+          "occupied_bw_hz": 17250.0,
+          "snr_db": 16.425865122753244,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4140715050308893,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73046,
+      "family": "BPSK",
+      "added_noise_db": 8,
+      "prediction": "BPSK",
+      "latency_ms": 34.696899998380104,
+      "detections": [
+        {
+          "signal_id": "20e0fad9d703fe5b0bed/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149981216.0645195,
+          "occupied_bw_hz": 23250.0,
+          "snr_db": 13.397393249706784,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.26085238357218254,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73047,
+      "family": "BPSK",
+      "added_noise_db": 0,
+      "prediction": "BPSK",
+      "latency_ms": 29.09680000084336,
+      "detections": [
+        {
+          "signal_id": "878b57fd9d8b0938bba3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149972691.16296023,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 22.554618205524513,
+          "candidate_modulation": "BPSK",
+          "predicted_modulation": "BPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.39790812842543877,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73048,
+      "family": "QPSK",
+      "added_noise_db": 0,
+      "prediction": "QPSK",
+      "latency_ms": 29.67229999921983,
+      "detections": [
+        {
+          "signal_id": "f06329907a46074fd5df/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149979300.29069525,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 22.231258684032884,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.41738362915551164,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73049,
+      "family": "QPSK",
+      "added_noise_db": 2,
+      "prediction": "QPSK",
+      "latency_ms": 29.811100001097657,
+      "detections": [
+        {
+          "signal_id": "0975fe78379a647cb8cf/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995782.61052606,
+          "occupied_bw_hz": 15000.0,
+          "snr_db": 21.056640567112126,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.40425831900794973,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73050,
+      "family": "QPSK",
+      "added_noise_db": 4,
+      "prediction": "QPSK",
+      "latency_ms": 28.99239999896963,
+      "detections": [
+        {
+          "signal_id": "17bd36f9b6c522d2c889/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150033861.0571664,
+          "occupied_bw_hz": 18000.0,
+          "snr_db": 18.31596682704835,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.35512643177286085,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73051,
+      "family": "QPSK",
+      "added_noise_db": 6,
+      "prediction": "QPSK",
+      "latency_ms": 30.811500000709202,
+      "detections": [
+        {
+          "signal_id": "42d96b7914737427d633/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150014662.964053,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 15.736003191307033,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.33814017754015646,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73052,
+      "family": "QPSK",
+      "added_noise_db": 8,
+      "prediction": "QPSK",
+      "latency_ms": 30.070099997828947,
+      "detections": [
+        {
+          "signal_id": "0ced7f9c9c1f7dab56b1/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149975871.31168485,
+          "occupied_bw_hz": 13875.0,
+          "snr_db": 15.56651021150495,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.2516018323576792,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73053,
+      "family": "QPSK",
+      "added_noise_db": 0,
+      "prediction": "QPSK",
+      "latency_ms": 83.66290000049048,
+      "detections": [
+        {
+          "signal_id": "e82cc8e1988563ee536f/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150018242.28995615,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 22.51633241093417,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.331207262514434,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73054,
+      "family": "QPSK",
+      "added_noise_db": 2,
+      "prediction": "QPSK",
+      "latency_ms": 36.528399999951944,
+      "detections": [
+        {
+          "signal_id": "446b271555ba2b9e2162/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149984667.91948602,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 20.31604158281745,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.33634609849808594,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73055,
+      "family": "QPSK",
+      "added_noise_db": 4,
+      "prediction": "QPSK",
+      "latency_ms": 38.652400002320064,
+      "detections": [
+        {
+          "signal_id": "10644e89f05ce3af3db4/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149992433.5770323,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 18.663141044885858,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4046108704628072,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73056,
+      "family": "QPSK",
+      "added_noise_db": 6,
+      "prediction": "QPSK",
+      "latency_ms": 31.436799999937648,
+      "detections": [
+        {
+          "signal_id": "05838463c55684e11866/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150020290.83836007,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 16.633201628546658,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3781492216050719,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73057,
+      "family": "QPSK",
+      "added_noise_db": 8,
+      "prediction": "QPSK",
+      "latency_ms": 27.396200002840487,
+      "detections": [
+        {
+          "signal_id": "585191c32e933b06d2d5/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150021375.8518324,
+          "occupied_bw_hz": 19125.0,
+          "snr_db": 14.358492149458502,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.39838602132960477,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73058,
+      "family": "QPSK",
+      "added_noise_db": 0,
+      "prediction": "QPSK",
+      "latency_ms": 27.391499999794178,
+      "detections": [
+        {
+          "signal_id": "ad2e942aadcad3faea77/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150011823.80234033,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 21.40501153346763,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.29964163325757354,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73059,
+      "family": "QPSK",
+      "added_noise_db": 2,
+      "prediction": "QPSK",
+      "latency_ms": 26.68689999700291,
+      "detections": [
+        {
+          "signal_id": "8eda2ac60670112156aa/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149991794.13226637,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 20.11675265608074,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.32979141971249226,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73060,
+      "family": "QPSK",
+      "added_noise_db": 4,
+      "prediction": "QPSK",
+      "latency_ms": 29.116800000338117,
+      "detections": [
+        {
+          "signal_id": "ec0516a9e97d4412ea60/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150014280.6996386,
+          "occupied_bw_hz": 23625.0,
+          "snr_db": 17.31740257405945,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.30541700391215065,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73061,
+      "family": "QPSK",
+      "added_noise_db": 6,
+      "prediction": "QPSK",
+      "latency_ms": 30.90620000148192,
+      "detections": [
+        {
+          "signal_id": "7f8eb5236d04f95cdec9/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149970850.00009027,
+          "occupied_bw_hz": 22875.0,
+          "snr_db": 15.3412671549712,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3429123338173634,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73062,
+      "family": "QPSK",
+      "added_noise_db": 8,
+      "prediction": "QPSK",
+      "latency_ms": 29.134799999155803,
+      "detections": [
+        {
+          "signal_id": "62347f0acc0d61e7a4e5/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993279.6433815,
+          "occupied_bw_hz": 17625.0,
+          "snr_db": 14.669895390848886,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.41132431898777677,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73063,
+      "family": "QPSK",
+      "added_noise_db": 0,
+      "prediction": "QPSK",
+      "latency_ms": 27.04499999890686,
+      "detections": [
+        {
+          "signal_id": "184e95f81fa764e0b3e2/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149988261.75719047,
+          "occupied_bw_hz": 21000.0,
+          "snr_db": 21.37535714161674,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "QPSK",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.10180756246263156,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73064,
+      "family": "AM-DSB",
+      "added_noise_db": 0,
+      "prediction": "AM-DSB",
+      "latency_ms": 29.917200001364108,
+      "detections": [
+        {
+          "signal_id": "980a643919f2a1f76167/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149996867.53424284,
+          "occupied_bw_hz": 4125.0,
+          "snr_db": 25.416196164984473,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.23275124818644444,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73065,
+      "family": "AM-DSB",
+      "added_noise_db": 2,
+      "prediction": "AM-DSB",
+      "latency_ms": 27.152200000273297,
+      "detections": [
+        {
+          "signal_id": "e68798b685cb652baabb/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150004657.86839414,
+          "occupied_bw_hz": 4875.0,
+          "snr_db": 24.63611233375689,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4188207645783747,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73066,
+      "family": "AM-DSB",
+      "added_noise_db": 4,
+      "prediction": "AM-DSB",
+      "latency_ms": 26.90009999787435,
+      "detections": [
+        {
+          "signal_id": "0bbc2ab84b2ffdc774c4/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149985108.4106959,
+          "occupied_bw_hz": 3375.0,
+          "snr_db": 22.856521783927594,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3267756616310411,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73067,
+      "family": "AM-DSB",
+      "added_noise_db": 6,
+      "prediction": "AM-DSB",
+      "latency_ms": 25.558200002706144,
+      "detections": [
+        {
+          "signal_id": "bb1bcc3fd4cceb5d581d/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149989057.64201137,
+          "occupied_bw_hz": 4500.0,
+          "snr_db": 21.14860069705411,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.21854352890130446,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73068,
+      "family": "AM-DSB",
+      "added_noise_db": 8,
+      "prediction": "AM-DSB",
+      "latency_ms": 28.883099999802653,
+      "detections": [
+        {
+          "signal_id": "0d2ce5488141098c1ede/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149970034.84090048,
+          "occupied_bw_hz": 4125.0,
+          "snr_db": 19.436406237094005,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3508628122690276,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73069,
+      "family": "AM-DSB",
+      "added_noise_db": 0,
+      "prediction": "AM-DSB",
+      "latency_ms": 29.46950000114157,
+      "detections": [
+        {
+          "signal_id": "232641e8afc6d00fce19/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150024449.87367374,
+          "occupied_bw_hz": 4125.0,
+          "snr_db": 26.62389784416756,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.35559558587223794,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73070,
+      "family": "AM-DSB",
+      "added_noise_db": 2,
+      "prediction": "AM-DSB",
+      "latency_ms": 29.853500000172062,
+      "detections": [
+        {
+          "signal_id": "a560cf12252f03ce37f7/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149991442.2963143,
+          "occupied_bw_hz": 4500.0,
+          "snr_db": 24.542505836120135,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4080544710636135,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73071,
+      "family": "AM-DSB",
+      "added_noise_db": 4,
+      "prediction": "AM-DSB",
+      "latency_ms": 29.952299999422394,
+      "detections": [
+        {
+          "signal_id": "cf044f9a3cb1604af583/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995404.98824596,
+          "occupied_bw_hz": 4500.0,
+          "snr_db": 23.05877023182464,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.41515295729409063,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73072,
+      "family": "AM-DSB",
+      "added_noise_db": 6,
+      "prediction": "AM-DSB",
+      "latency_ms": 26.524199998675613,
+      "detections": [
+        {
+          "signal_id": "23a690613760077e0fc1/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995038.4455586,
+          "occupied_bw_hz": 3750.0,
+          "snr_db": 21.86426280050174,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3384512835273725,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73073,
+      "family": "AM-DSB",
+      "added_noise_db": 8,
+      "prediction": "AM-DSB",
+      "latency_ms": 31.720900002255803,
+      "detections": [
+        {
+          "signal_id": "7d2a42627561f95e6f39/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150007610.20851934,
+          "occupied_bw_hz": 3750.0,
+          "snr_db": 19.664180946403306,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.1751610106071746,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73074,
+      "family": "AM-DSB",
+      "added_noise_db": 0,
+      "prediction": "AM-DSB",
+      "latency_ms": 30.919500000891276,
+      "detections": [
+        {
+          "signal_id": "e6bbddaa4ec44dc8e6be/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150023911.01600745,
+          "occupied_bw_hz": 3750.0,
+          "snr_db": 26.967919052982477,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.2384926367464988,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73075,
+      "family": "AM-DSB",
+      "added_noise_db": 2,
+      "prediction": "AM-DSB",
+      "latency_ms": 30.962500000896398,
+      "detections": [
+        {
+          "signal_id": "bca78929f9266a344a22/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995827.29240403,
+          "occupied_bw_hz": 4875.0,
+          "snr_db": 24.820884901642263,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4403478864029472,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73076,
+      "family": "AM-DSB",
+      "added_noise_db": 4,
+      "prediction": "AM-DSB",
+      "latency_ms": 62.302700000145705,
+      "detections": [
+        {
+          "signal_id": "33bc8ffe09202043ebb0/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149965670.91135183,
+          "occupied_bw_hz": 3750.0,
+          "snr_db": 23.122132156416416,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3290456124176655,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73077,
+      "family": "AM-DSB",
+      "added_noise_db": 6,
+      "prediction": "AM-DSB",
+      "latency_ms": 34.902499999589054,
+      "detections": [
+        {
+          "signal_id": "e01cec3f935ae82eb5b0/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149979590.44622234,
+          "occupied_bw_hz": 4500.0,
+          "snr_db": 21.39260784358713,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.4264486598758407,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73078,
+      "family": "AM-DSB",
+      "added_noise_db": 8,
+      "prediction": "AM-DSB",
+      "latency_ms": 35.17629999987548,
+      "detections": [
+        {
+          "signal_id": "28a72ce97d89d26e22b3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149983375.19710842,
+          "occupied_bw_hz": 5250.0,
+          "snr_db": 19.058781376945056,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.367437603089922,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73079,
+      "family": "AM-DSB",
+      "added_noise_db": 0,
+      "prediction": "AM-DSB",
+      "latency_ms": 36.555300001055,
+      "detections": [
+        {
+          "signal_id": "7609dbf9c3ae1412a90b/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150004790.29509026,
+          "occupied_bw_hz": 4875.0,
+          "snr_db": 25.919271589065673,
+          "candidate_modulation": "AM-DSB",
+          "predicted_modulation": "AM-DSB",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.22955619390835524,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73080,
+      "family": "WB-FM",
+      "added_noise_db": 0,
+      "prediction": "WB-FM",
+      "latency_ms": 39.41860000122688,
+      "detections": [
+        {
+          "signal_id": "4e117fc3cd8836a10edf/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993002.73379028,
+          "occupied_bw_hz": 31875.0,
+          "snr_db": 19.16342489597336,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.2502425471898777,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73081,
+      "family": "WB-FM",
+      "added_noise_db": 2,
+      "prediction": "WB-FM",
+      "latency_ms": 42.04810000010184,
+      "detections": [
+        {
+          "signal_id": "2ad0818b12093a944adc/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150001722.95042658,
+          "occupied_bw_hz": 25875.0,
+          "snr_db": 18.188842022032766,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 0.952621990938833,
+          "lof_normality_score": 0.31584263396516943,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73082,
+      "family": "WB-FM",
+      "added_noise_db": 4,
+      "prediction": "WB-FM",
+      "latency_ms": 42.69810000187135,
+      "detections": [
+        {
+          "signal_id": "80ecb5208a8f39d22edb/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149973971.48522383,
+          "occupied_bw_hz": 36750.0,
+          "snr_db": 15.186934920818393,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3445157058158488,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73083,
+      "family": "WB-FM",
+      "added_noise_db": 6,
+      "prediction": "WB-FM",
+      "latency_ms": 37.844499998755055,
+      "detections": [
+        {
+          "signal_id": "a3d3f417693948c55cec/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149976207.65062508,
+          "occupied_bw_hz": 29625.0,
+          "snr_db": 14.126951599981115,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3386644310915288,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73084,
+      "family": "WB-FM",
+      "added_noise_db": 8,
+      "prediction": "WB-FM",
+      "latency_ms": 47.49909999736701,
+      "detections": [
+        {
+          "signal_id": "24468a4729b2b9e9a30a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150008806.59638223,
+          "occupied_bw_hz": 28500.0,
+          "snr_db": 12.53973149433904,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 0.8876994266108071,
+          "lof_normality_score": 0.328732540142213,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73085,
+      "family": "WB-FM",
+      "added_noise_db": 0,
+      "prediction": "WB-FM",
+      "latency_ms": 52.36270000023069,
+      "detections": [
+        {
+          "signal_id": "2dd2289d921f1c7845f3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150026653.08841816,
+          "occupied_bw_hz": 39000.0,
+          "snr_db": 18.540436776558813,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.07238632373814857,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73086,
+      "family": "WB-FM",
+      "added_noise_db": 2,
+      "prediction": "WB-FM",
+      "latency_ms": 62.65160000111791,
+      "detections": [
+        {
+          "signal_id": "c9cc9200d65a5cafcc26/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149965246.06863627,
+          "occupied_bw_hz": 25125.0,
+          "snr_db": 18.51170791061142,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 0.6981994097537677,
+          "lof_normality_score": 0.30163807765265704,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73087,
+      "family": "WB-FM",
+      "added_noise_db": 4,
+      "prediction": "WB-FM",
+      "latency_ms": 54.69549999907031,
+      "detections": [
+        {
+          "signal_id": "8a3c124811014de564d6/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149984793.05741927,
+          "occupied_bw_hz": 28500.0,
+          "snr_db": 16.12577547338611,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.30210028232193986,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73088,
+      "family": "WB-FM",
+      "added_noise_db": 6,
+      "prediction": "WB-FM",
+      "latency_ms": 53.12450000201352,
+      "detections": [
+        {
+          "signal_id": "cb84cf726fdaca7451cb/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993819.4817566,
+          "occupied_bw_hz": 34500.0,
+          "snr_db": 13.50375748343248,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.36554440708581604,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73089,
+      "family": "WB-FM",
+      "added_noise_db": 8,
+      "prediction": "WB-FM",
+      "latency_ms": 53.761800001666415,
+      "detections": [
+        {
+          "signal_id": "f06a147c57a8d9ff51a8/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149986250.7281654,
+          "occupied_bw_hz": 31125.0,
+          "snr_db": 12.114090504405528,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.29542678444293546,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73090,
+      "family": "WB-FM",
+      "added_noise_db": 0,
+      "prediction": "WB-FM",
+      "latency_ms": 51.1834999997518,
+      "detections": [
+        {
+          "signal_id": "5a2aff10d8764f3e2a7b/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150022629.21638468,
+          "occupied_bw_hz": 27000.0,
+          "snr_db": 19.849219534899525,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 0.8034239772370632,
+          "lof_normality_score": 0.19710952491632994,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73091,
+      "family": "WB-FM",
+      "added_noise_db": 2,
+      "prediction": "WB-FM",
+      "latency_ms": 42.663699998229276,
+      "detections": [
+        {
+          "signal_id": "f8adb0b9b3383f05804f/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149973089.43287343,
+          "occupied_bw_hz": 27375.0,
+          "snr_db": 18.239058482024774,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 0.9383035807853177,
+          "lof_normality_score": 0.25532882525001455,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73092,
+      "family": "WB-FM",
+      "added_noise_db": 4,
+      "prediction": "WB-FM",
+      "latency_ms": 37.44920000099228,
+      "detections": [
+        {
+          "signal_id": "8b333b3599248114efd4/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149983315.05268282,
+          "occupied_bw_hz": 30375.0,
+          "snr_db": 15.918203409259924,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.30504247913837546,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73093,
+      "family": "WB-FM",
+      "added_noise_db": 6,
+      "prediction": "WB-FM",
+      "latency_ms": 36.89490000033402,
+      "detections": [
+        {
+          "signal_id": "fe8ab34ddffcaed913f2/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150016675.44856036,
+          "occupied_bw_hz": 32625.0,
+          "snr_db": 13.863351682396068,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.3337420959608679,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73094,
+      "family": "WB-FM",
+      "added_noise_db": 8,
+      "prediction": "WB-FM",
+      "latency_ms": 46.781900000496535,
+      "detections": [
+        {
+          "signal_id": "ffe846734578c2292c7a/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150012227.41938493,
+          "occupied_bw_hz": 30000.0,
+          "snr_db": 12.167385020189322,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.34883857283797615,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 73095,
+      "family": "WB-FM",
+      "added_noise_db": 0,
+      "prediction": "WB-FM",
+      "latency_ms": 87.31800000168732,
+      "detections": [
+        {
+          "signal_id": "e46b41e4f07764ac4045/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150016226.9787754,
+          "occupied_bw_hz": 36375.0,
+          "snr_db": 18.80558478693038,
+          "candidate_modulation": "WB-FM",
+          "predicted_modulation": "WB-FM",
+          "classification_confidence": 1.0,
+          "lof_normality_score": 0.1449309883799712,
+          "clf_reason": "Accepted by SNR, familiarity and confidence checks",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96000,
+      "family": "16-QAM",
+      "added_noise_db": 0,
+      "prediction": "UNKNOWN",
+      "latency_ms": 50.70940000223345,
+      "detections": [
+        {
+          "signal_id": "05b3aae0892c4d72a6aa/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150006347.46163037,
+          "occupied_bw_hz": 16500.0,
+          "snr_db": 22.542805977284814,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.34254283313649414,
+          "clf_reason": "Novel waveform (LOF -0.343 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96001,
+      "family": "16-QAM",
+      "added_noise_db": 1,
+      "prediction": "UNKNOWN",
+      "latency_ms": 35.662999998749,
+      "detections": [
+        {
+          "signal_id": "981618d6b510f015e026/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149979206.3325344,
+          "occupied_bw_hz": 23625.0,
+          "snr_db": 20.043533655977825,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.34221645488571584,
+          "clf_reason": "Novel waveform (LOF -0.342 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96002,
+      "family": "16-QAM",
+      "added_noise_db": 2,
+      "prediction": "UNKNOWN",
+      "latency_ms": 48.52839999875869,
+      "detections": [
+        {
+          "signal_id": "14537f0b3ab1c98b34da/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149993222.09094536,
+          "occupied_bw_hz": 18000.0,
+          "snr_db": 20.17396764653453,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.8792163519063234,
+          "lof_normality_score": -0.6693328630074173,
+          "clf_reason": "Novel waveform (LOF -0.669 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96003,
+      "family": "16-QAM",
+      "added_noise_db": 3,
+      "prediction": "UNKNOWN",
+      "latency_ms": 45.99589999997988,
+      "detections": [
+        {
+          "signal_id": "ea5d73be58da8a951635/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150001498.0868408,
+          "occupied_bw_hz": 23250.0,
+          "snr_db": 18.012909693076807,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.3227478706202498,
+          "clf_reason": "Novel waveform (LOF -0.323 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96004,
+      "family": "16-QAM",
+      "added_noise_db": 0,
+      "prediction": "UNKNOWN",
+      "latency_ms": 46.87030000059167,
+      "detections": [
+        {
+          "signal_id": "690e67ae8ce22ebb12b6/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150028568.94034797,
+          "occupied_bw_hz": 14250.0,
+          "snr_db": 23.162754279245622,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.215072945254972,
+          "clf_reason": "Novel waveform (LOF -0.215 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96005,
+      "family": "16-QAM",
+      "added_noise_db": 1,
+      "prediction": "UNKNOWN",
+      "latency_ms": 42.82640000019455,
+      "detections": [
+        {
+          "signal_id": "9655fca0e5f1e7f976c3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149967903.31960234,
+          "occupied_bw_hz": 23625.0,
+          "snr_db": 20.128916895754763,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.3330473447670663,
+          "clf_reason": "Novel waveform (LOF -0.333 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96006,
+      "family": "16-QAM",
+      "added_noise_db": 2,
+      "prediction": "UNKNOWN",
+      "latency_ms": 39.811299997381866,
+      "detections": [
+        {
+          "signal_id": "623f12224f6a89e2e7c3/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150002495.20356935,
+          "occupied_bw_hz": 23250.0,
+          "snr_db": 19.147396654881724,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.43025068835317204,
+          "clf_reason": "Novel waveform (LOF -0.430 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96007,
+      "family": "16-QAM",
+      "added_noise_db": 3,
+      "prediction": "UNKNOWN",
+      "latency_ms": 38.72419999970589,
+      "detections": [
+        {
+          "signal_id": "89b14f09b831524031e9/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150030460.60334155,
+          "occupied_bw_hz": 15000.0,
+          "snr_db": 20.02675380178678,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.3805994643309176,
+          "clf_reason": "Novel waveform (LOF -0.381 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96008,
+      "family": "16-QAM",
+      "added_noise_db": 0,
+      "prediction": "UNKNOWN",
+      "latency_ms": 37.926400000287686,
+      "detections": [
+        {
+          "signal_id": "0994f7ee5de36e434dff/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149995526.51871276,
+          "occupied_bw_hz": 23250.0,
+          "snr_db": 20.962339001117705,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 0.8456487855496905,
+          "lof_normality_score": -0.4793511185059294,
+          "clf_reason": "Novel waveform (LOF -0.479 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96009,
+      "family": "16-QAM",
+      "added_noise_db": 1,
+      "prediction": "UNKNOWN",
+      "latency_ms": 60.050199997931486,
+      "detections": [
+        {
+          "signal_id": "53379abe7ebae1058288/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150022443.54338476,
+          "occupied_bw_hz": 23250.0,
+          "snr_db": 20.176512643985763,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.6555089101042944,
+          "clf_reason": "Novel waveform (LOF -0.656 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96010,
+      "family": "16-QAM",
+      "added_noise_db": 2,
+      "prediction": "UNKNOWN",
+      "latency_ms": 39.14689999874099,
+      "detections": [
+        {
+          "signal_id": "075686558c57d4e6d3bf/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 150016016.57991707,
+          "occupied_bw_hz": 16125.0,
+          "snr_db": 20.538444218511525,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.8441642132132512,
+          "clf_reason": "Novel waveform (LOF -0.844 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    },
+    {
+      "seed": 96011,
+      "family": "16-QAM",
+      "added_noise_db": 3,
+      "prediction": "UNKNOWN",
+      "latency_ms": 40.83420000097249,
+      "detections": [
+        {
+          "signal_id": "cfde8182199dfd9c9cc0/b1",
+          "source_tag": "SIMULATED",
+          "center_freq_hz": 149969289.36340874,
+          "occupied_bw_hz": 16500.0,
+          "snr_db": 19.632832081727454,
+          "candidate_modulation": "QPSK",
+          "predicted_modulation": "UNKNOWN",
+          "classification_confidence": 1.0,
+          "lof_normality_score": -0.4156904692619734,
+          "clf_reason": "Novel waveform (LOF -0.416 < -0.08)",
+          "peak_power_dbm": null
+        }
+      ]
+    }
+  ],
+  "rf_latency_ms": {
+    "n": 108,
+    "median": 30.85885000109556,
+    "p95": 54.36870499997894
+  }
+}

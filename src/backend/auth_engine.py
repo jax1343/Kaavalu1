@@ -10,6 +10,10 @@ from .rules import MODULATIONS, SOURCES, finite, validated_rules
 
 def _classified(row):
     data = dict(to_shared_record(row))
+    # A digital level cannot supply an absolute dBm measurement. Normalize
+    # explicit uncalibrated input before either policy or storage consumes it.
+    if data.get("calibration_status") == "UNCALIBRATED":
+        data["peak_power_dbm"] = None
     if data.get("source_tag") not in SOURCES:
         raise ValueError("Laptop 2 record needs a valid source_tag")
     if not data.get("signal_id"):
